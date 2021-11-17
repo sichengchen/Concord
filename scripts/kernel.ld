@@ -34,4 +34,5 @@ SECTIONS
         . = ALIGN(4096);
     }
 
+    /DISCARD/ : { *(.comment) *(.eh_frame) }
 }   
