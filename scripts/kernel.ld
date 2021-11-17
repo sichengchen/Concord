@@ -34,4 +34,4 @@ SECTIONS
         . = ALIGN(4096);
     }
 
-    
+}   
