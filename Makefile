@@ -16,46 +16,42 @@ ASM_FLAGS = -f elf -g -F stabs
 all: $(S_OBJECTS) $(C_OBJECTS) link update_image
 
 .c.o:
-    @echo Compiling source code $< ...
-    $(CC) $(C_FLAGS) $< -o $@
+	@echo Compiling source code $< ...
+	$(CC) $(C_FLAGS) $< -o $@
 
 .s.o:
-    @echo Compiling ASM files$< ...
-    $(ASM) $(ASM_FLAGS) $<
+	@echo Compiling ASM files$< ...
+	$(ASM) $(ASM_FLAGS) $<
 
 link:
-    @echo Linking kernel files...
-    $(LD) $(LD_FLAGS) $(S_OBJECTS) $(C_OBJECTS) -o hx_kernel
+	@echo Linking kernel files...
+	$(LD) $(LD_FLAGS) $(S_OBJECTS) $(C_OBJECTS) -o hx_kernel
 
 .PHONY:clean
 clean:
-    $(RM) $(S_OBJECTS) $(C_OBJECTS) hx_kernel
+	$(RM) $(S_OBJECTS) $(C_OBJECTS) hx_kernel
 
 .PHONY:update_image
 update_image:
-    sudo mount floppy.img /mnt/kernel
-    sudo cp hx_kernel /mnt/kernel/hx_kernel
-    sleep 1
-    sudo umount /mnt/kernel
+	sudo mount floppy.img /mnt/kernel
+	sudo cp hx_kernel /mnt/kernel/hx_kernel
+	sleep 1
+	sudo umount /mnt/kernel
 
 .PHONY:mount_image
 mount_image:
-    sudo mount floppy.img /mnt/kernel
+	sudo mount floppy.img /mnt/kernel
 
 .PHONY:umount_image
 umount_image:
-    sudo umount /mnt/kernel
+	sudo umount /mnt/kernel
 
 .PHONY:qemu
 qemu:
-    qemu -fda floppy.img -boot a
-
-.PHONY:bochs
-bochs:
-    bochs -f tools/bochsrc.txt
+	qemu -fda floppy.img -boot a
 
 .PHONY:debug
 debug:
-    qemu -S -s -fda floppy.img -boot a &
-    sleep 1
-    cgdb -x tools/gdbinit
+	qemu -S -s -fda floppy.img -boot a &
+	sleep 1
+	cgdb -x tools/gdbinit
