@@ -1,3 +1,5 @@
 # Concord
-A toy unix-like operating system developed by me.
+A toy unix-like operating system.
+
 Under development.
+
