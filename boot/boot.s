@@ -1,39 +1,37 @@
-  MBOOT_HEADER_MAGIC equ 0x1BADB002
-  MBOOT_PAGE_ALIGN equ 1 << 0
-  MBOOT_MEM_INFO equ 1 << 1
-  MBOOT_HEADER_FLAGS equ MBOOT_PAGE_ALIGN | MBOOT_MEM_INFO
-  MBOOT_CHECKSUM equ -(MBOOT_HEADER_MAGIC+MBOOT_HEADER_FLAGS)
+MBOOT_HEADER_MAGIC 	equ 	0x1BADB002
 
-  [BITS 32]
+MBOOT_PAGE_ALIGN 	equ 	1 << 0
+MBOOT_MEM_INFO 		equ 	1 << 1
+MBOOT_HEADER_FLAGS 	equ 	MBOOT_PAGE_ALIGN | MBOOT_MEM_INFO
+MBOOT_CHECKSUM 		equ 	- (MBOOT_HEADER_MAGIC + MBOOT_HEADER_FLAGS)
 
-  section .text
+[BITS 32]
 
-  dd MBOOT_HEADER_MAGIC
-  dd MBOOT_HEADER_FLAGS
-  dd MBOOT_CHECKSUM
+section .text
+dd MBOOT_HEADER_MAGIC
+dd MBOOT_HEADER_FLAGS
+dd MBOOT_CHECKSUM
 
-  [GLOBAL start]
-  [GLOBAL glb_mboot_ptr]
-  [EXTERN kern_entry]
+[GLOBAL start]
+[GLOBAL glb_mboot_ptr]
+[EXTERN kern_entry]
 
 start:
-  cli
-  mov esp, STACK_TOP
-  mov ebp, 0
-  and esp, 0FFFFFFF0H
-  mov [glb_mboot_ptr], ebx
-  call kern_entry
-
+	cli
+	mov esp, STACK_TOP
+	mov ebp, 0
+	and esp, 0FFFFFFF0H
+	mov [glb_mboot_ptr], ebx
+	call kern_entry
 stop:
-  hlt
-  jmp stop
+	hlt
+	jmp stop
 
-  section .bss
+section .bss
 
 stack:
-  resb 32768
-
+	resb 32768
 glb_mboot_ptr:
-  resb 4
+	resb 4
 
-  STACK_TOP equ $-stack-1
+STACK_TOP equ $-stack-1
