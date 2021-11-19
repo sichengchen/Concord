@@ -1,7 +1,7 @@
 #include "console.h"
 #include "common.h"
 
-static uint16_t *video_memory = (uint16_t *)0xB8000;
+static uint16_t *video_memory = (uint16_t*)0xB8000;
 static uint8_t cursor_x = 0;
 static uint8_t cursor_y = 0;
 
@@ -77,7 +77,7 @@ console_putc_color(char c, real_color_t back, real_color_t fore)
 }
 
 void 
-console_write(char *cstr)
+console_write(char* cstr)
 {
 	while (*cstr) {
 	      console_putc_color(*cstr++, rc_black, rc_white);
@@ -85,7 +85,7 @@ console_write(char *cstr)
 }
 
 void 
-console_write_color(char *cstr, real_color_t back, real_color_t fore)
+console_write_color(char* cstr, real_color_t back, real_color_t fore)
 {
 	while (*cstr) {
 	      console_putc_color(*cstr++, back, fore);
