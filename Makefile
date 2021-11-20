@@ -1,5 +1,4 @@
 #!Makefile
-
 C_SOURCES = $(shell find . -name "*.c")
 C_OBJECTS = $(patsubst %.c, %.o, $(C_SOURCES))
 S_SOURCES = $(shell find . -name "*.s")
@@ -9,22 +8,23 @@ CC = gcc
 LD = ld
 ASM = nasm
 
-C_FLAGS = -c -Wall -m32 -ggdb -gstabs+ -nostdinc -fno-pic -fno-builtin -fno-stack-protector -I include
+C_FLAGS = -c -Wall -m32 -ggdb -gstabs+ -nostdinc -fno-builtin -fno-stack-protector -I include
 LD_FLAGS = -T scripts/kernel.ld -m elf_i386 -nostdlib
 ASM_FLAGS = -f elf -g -F stabs
 
 all: $(S_OBJECTS) $(C_OBJECTS) link update_image
 
+# The automatic variable `$<' is just the first prerequisite
 .c.o:
-	@echo Compiling source code $< ...
+	@echo Compiling C Files $< ...
 	$(CC) $(C_FLAGS) $< -o $@
 
 .s.o:
-	@echo Compiling ASM files$< ...
+	@echo Compiling Assembly Files $< ...
 	$(ASM) $(ASM_FLAGS) $<
 
 link:
-	@echo Linking kernel files...
+	@echo Linking Kernel Files...
 	$(LD) $(LD_FLAGS) $(S_OBJECTS) $(C_OBJECTS) -o concord_kernel
 
 .PHONY:clean
@@ -54,4 +54,5 @@ qemu:
 debug:
 	qemu -S -s -fda floppy.img -boot a &
 	sleep 1
-	cgdb -x tools/gdbinit
+	cgdb -x scripts/gdbinit
+

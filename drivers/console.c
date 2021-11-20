@@ -1,25 +1,26 @@
 #include "console.h"
 #include "common.h"
 
-static uint16_t *video_memory = (uint16_t*)0xB8000;
+static uint16_t *video_memory = (uint16_t *)0xB8000;
+
 static uint8_t cursor_x = 0;
 static uint8_t cursor_y = 0;
 
-static void 
+static void
 move_cursor()
 {
-  uint16_t cursor_location = cursor_y * 80 + cursor_x;
-  outb(0x3D4, 14);
-  outb(0x3D5, cursor_location >> 8);
-  outb(0x3D4, 15);
-  outb(0x3D5, cursor_location);
+	uint16_t cursorLocation = cursor_y * 80 + cursor_x;
+	outb(0x3D4, 14);
+	outb(0x3D5, cursorLocation >> 8);
+	outb(0x3D4, 15);
+	outb(0x3D5, cursorLocation);
 }
 
-static void 
+static void
 scroll()
 {
 	uint8_t attribute_byte = (0 << 4) | (15 & 0x0F);
-	uint16_t blank = 0x20 | (attribute_byte << 8);
+	uint16_t blank = 0x20 | (attribute_byte << 8);  // space 0x20
 	if (cursor_y >= 25) {
 		int i;
 		for (i = 0 * 80; i < 24 * 80; i++) {
@@ -32,7 +33,7 @@ scroll()
 	}
 }
 
-void 
+void
 console_clear()
 {
 	uint8_t attribute_byte = (0 << 4) | (15 & 0x0F);
@@ -46,15 +47,13 @@ console_clear()
 	move_cursor();
 }
 
-void 
+void
 console_putc_color(char c, real_color_t back, real_color_t fore)
 {
 	uint8_t back_color = (uint8_t)back;
 	uint8_t fore_color = (uint8_t)fore;
 	uint8_t attribute_byte = (back_color << 4) | (fore_color & 0x0F);
 	uint16_t attribute = attribute_byte << 8;
-	// 0x08 Backspace
-	// 0x09 Tab
 	if (c == 0x08 && cursor_x) {
 	      cursor_x--;
 	} else if (c == 0x09) {
@@ -76,23 +75,23 @@ console_putc_color(char c, real_color_t back, real_color_t fore)
 	move_cursor();
 }
 
-void 
-console_write(char* cstr)
+void
+console_write(char *cstr)
 {
 	while (*cstr) {
 	      console_putc_color(*cstr++, rc_black, rc_white);
 	}
 }
 
-void 
-console_write_color(char* cstr, real_color_t back, real_color_t fore)
+void
+console_write_color(char *cstr, real_color_t back, real_color_t fore)
 {
 	while (*cstr) {
 	      console_putc_color(*cstr++, back, fore);
 	}
 }
 
-void 
+void
 console_write_hex(uint32_t n, real_color_t back, real_color_t fore)
 {
 	int tmp;
@@ -114,7 +113,7 @@ console_write_hex(uint32_t n, real_color_t back, real_color_t fore)
 	}
 }
 
-void 
+void
 console_write_dec(uint32_t n, real_color_t back, real_color_t fore)
 {
 	if (n == 0) {

@@ -7,3 +7,5 @@ kern_entry()
 	console_write_color("Hello!\n", rc_black, rc_green);
 	return 0;
 }
+
+

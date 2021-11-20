@@ -1,4 +1,3 @@
-
 #ifndef INCLUDE_TYPES_H_
 #define INCLUDE_TYPES_H_
 
@@ -18,4 +17,4 @@ typedef          short int16_t;
 typedef unsigned char  uint8_t;
 typedef          char  int8_t;
 
-#endif
+#endif 	// INCLUDE_TYPES_H_
