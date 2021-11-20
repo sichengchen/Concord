@@ -1,26 +1,32 @@
 #ifndef INCLUDE_STRING_H_
   #define INCLUDE_STRING_H_
   #include "types.h"
-  
-  void
-  memcpy(uint8_t* dest, const uint8_t* src, uint32_t len);
 
-  void
-  memset(uint8_t* dest, uint8_t val, uint32_t len);
+void*
+memset(void* dst, int c, uint32_t n);
 
-  void
-  bzero(void* dest, uint32_t len);
+int
+memcmp(const void* v1, const void* v2,
+       uint32_t n);
 
-  int
-  strcmp(const char* str1, const char* str2);
+void*
+memmove(void* dst, const void* src,
+        uint32_t n);
 
-  char*
-  strcpy(char* dest, const char* src);
+void*
+memcpy(void* dst, const void* src, uint32_t n);
 
-  char*
-  strcat(char* dest, const char* src);
+int
+strncmp(const char* p, const char* q,
+        uint32_t n);
 
-  int
-  strlen(const char* src);
-  
+char*
+strncpy(char* s, const char* t, uint32_t n);
+
+char*
+safestrcpy(char* s, const char* t, uint32_t n);
+
+int
+strlen(const char* s);
+
 #endif
