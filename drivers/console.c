@@ -9,11 +9,11 @@ static uint8_t cursor_y = 0;
 static void
 move_cursor()
 {
-	uint16_t cursorLocation = cursor_y * 80 + cursor_x;
+	uint16_t cursor_location = cursor_y * 80 + cursor_x;
 	outb(0x3D4, 14);
-	outb(0x3D5, cursorLocation >> 8);
+	outb(0x3D5, cursor_location >> 8);
 	outb(0x3D4, 15);
-	outb(0x3D5, cursorLocation);
+	outb(0x3D5, cursor_location);
 }
 
 static void
@@ -76,7 +76,7 @@ console_putc_color(char c, real_color_t back, real_color_t fore)
 }
 
 void
-console_write(char *cstr)
+console_write(char* cstr)
 {
 	while (*cstr) {
 	      console_putc_color(*cstr++, rc_black, rc_white);
@@ -84,7 +84,7 @@ console_write(char *cstr)
 }
 
 void
-console_write_color(char *cstr, real_color_t back, real_color_t fore)
+console_write_color(char* cstr, real_color_t back, real_color_t fore)
 {
 	while (*cstr) {
 	      console_putc_color(*cstr++, back, fore);
@@ -95,16 +95,16 @@ void
 console_write_hex(uint32_t n, real_color_t back, real_color_t fore)
 {
 	int tmp;
-	char noZeroes = 1;
+	char no_zeroes = 1;
 
 	console_write_color("0x", back, fore);
 	int i;
 	for (i = 28; i >= 0; i -= 4) {
 		tmp = (n >> i) & 0xF;
-		if (tmp == 0 && noZeroes != 0) {
+		if (tmp == 0 && no_zeroes != 0) {
 		      continue;
 		}
-		noZeroes = 0;
+		no_zeroes = 0;
 		if (tmp >= 0xA) {
 		      console_putc_color(tmp-0xA+'a', back, fore);
 		} else {
