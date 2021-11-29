@@ -48,7 +48,7 @@ umount_image:
 
 .PHONY:qemu
 qemu:
-	qemu -curses -fda floppy.img -boot a
+	qemu -curses -nographic -fda floppy.img -boot a
 
 .PHONY:debug
 debug:
