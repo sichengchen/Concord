@@ -1,4 +1,5 @@
 #include "console.h"
+#include "debug.h"
 
 int
 kern_entry()
