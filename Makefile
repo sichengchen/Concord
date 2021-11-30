@@ -60,3 +60,9 @@ debug:
 	sleep 1
 	cgdb -x scripts/gdbinit
 
+.PHONY:debugng
+debugng:
+	qemu -S -s -curses -fda floppy.img -boot a &
+	sleep 1
+	cgdb -x scripts/gdbinit
+
