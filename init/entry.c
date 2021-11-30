@@ -3,9 +3,11 @@
 int
 kern_entry()
 {
-	console_clear();
-	console_write_color("Hello!\n", rc_black, rc_green);
-	return 0;
+  init_debug();
+  console_clear();
+  printk_color(rc_black, rc_green, "Hello, World!\n");
+  panic("test");
+  return 0;
 }
 
 
