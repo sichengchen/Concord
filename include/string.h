@@ -29,4 +29,7 @@ safestrcpy(char *s, const char *t, uint32_t n);
 int
 strlen(const char *s);
 
+int
+strcmp(const char* s1, const char* s2);
+
 #endif

@@ -99,3 +99,10 @@ strlen(const char *s)
   for(n = 0; s[n]; n++);
   return n;
 }
+
+int
+strcmp(const char* s1, const char* s2)
+{
+  for (; *s1 && *s2 && *s1==*s2; s1++, s2++);
+  return *(unsigned char*)s1-*(unsigned char*)s2;
+}
